@@ -4,34 +4,22 @@ import WaterMeterForm from './components/WaterMeterForm';
 import RoomList from './components/RoomList';
 import Login from "./components/Login";
 //import Welcome from "./Welcome";
+import Navigation from './components/Navigation';
 
 function App() {
     return (
         <Router>
+         <Navigation />
+            <div className="content">
             <Routes>
                 <Route path="/" element={<Login />} />
                 <Route path="/RoomList" element={<RoomList />} />
+                <Route path="/WaterMeterForm" element={<WaterMeterForm />} />
 
             </Routes>
+             </div>
         </Router>
     );
 }
 
 export default App;
-//import logo from './logo.svg';
-
-//import './App.css';
-//import WaterMeterForm from './components/WaterMeterForm';
-//import RoomList from './components/RoomList';
-//function App() {
-//  return (
-//    <div className="App">
-//      <header className="App-header">
-//      <RoomList/>
-//        //<WaterMeterForm />
-//      </header>
-//    </div>
-//  );
-//}
-//
-//export default App;

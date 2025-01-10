@@ -1,0 +1,31 @@
+/* ตกแต่ง Sidebar */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 200px;
+  background-color: #333;
+  padding-top: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ปุ่มนำทาง */
+.nav-button {
+  color: white;
+  text-decoration: none;
+  background-color: #444;
+  padding: 15px 20px;
+  margin: 10px;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+}
+
+/* ปุ่มเปลี่ยนสีเมื่อ Hover */
+.nav-button:hover {
+  background-color: #555;
+}
