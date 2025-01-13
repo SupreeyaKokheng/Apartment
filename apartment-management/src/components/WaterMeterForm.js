@@ -1,49 +1,99 @@
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
-import React, { useState } from 'react';
 
 const WaterMeterForm = () => {
-    const [roomId, setRoomId] = useState('');
-    const [currentMeter, setCurrentMeter] = useState('');
-    const [pricePerUnit, setPricePerUnit] = useState('');
+  // สร้าง state สำหรับเก็บวันที่
+  const [currentDate, setCurrentDate] = useState("");
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        fetch('/api/water', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                roomId,
-                currentMeter,
-                pricePerUnit,
-            }),
-        })
-            .then((res) => res.json())
-            .then((data) => console.log(data));
-    };
+  // ฟังก์ชันดึงวันที่ปัจจุบัน
+  useEffect(() => {
+    const today = new Date();
+    const formattedDate = today.toISOString().split("T")[0]; // รูปแบบ YYYY-MM-DD
+    setCurrentDate(formattedDate);
+  }, []);
 
-    return (
-        <form onSubmit={handleSubmit}>
-            <input
-                type="number"
-                placeholder="Room ID"
-                value={roomId}
-                onChange={(e) => setRoomId(e.target.value)}
-            />
-            <input
-                type="number"
-                placeholder="Current Meter"
-                value={currentMeter}
-                onChange={(e) => setCurrentMeter(e.target.value)}
-            />
-            <input
-                type="number"
-                placeholder="Price Per Unit"
-                value={pricePerUnit}
-                onChange={(e) => setPricePerUnit(e.target.value)}
-            />
-            <button type="submit">Submit</button>
-        </form>
-    );
+  // สร้าง state สำหรับฟอร์ม
+  const [waterMeter, setWaterMeter] = useState({
+    roomId: "",
+    previousMeter: "",
+    currentMeter: "",
+    pricePerUnit: "",
+  });
+
+  // ฟังก์ชันจัดการการเปลี่ยนแปลงของ input
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setWaterMeter({ ...waterMeter, [name]: value });
+  };
+
+  // ฟังก์ชันจัดการการบันทึกข้อมูล
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      // ส่งข้อมูลไปยัง backend รวมวันที่ปัจจุบัน
+      await axios.post("http://localhost:8080/api/water", {
+        ...waterMeter,
+        recordDate: currentDate,
+      });
+      alert("บันทึกข้อมูลสำเร็จ!");
+    } catch (error) {
+      console.error("เกิดข้อผิดพลาด:", error);
+    }
+  };
+
+  return (
+    <div className="water-meter-form">
+      <h2>Water Meter Form</h2>
+
+      {/* แสดงวันที่ปัจจุบัน */}
+      <p>📅 วันที่: {currentDate}</p>
+
+      <form onSubmit={handleSubmit}>
+        <div>
+          <label>Room ID:</label>
+          <input
+            type="text"
+            name="roomId"
+            value={waterMeter.roomId}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label>Previous Meter:</label>
+          <input
+            type="number"
+            name="previousMeter"
+            value={waterMeter.previousMeter}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label>Current Meter:</label>
+          <input
+            type="number"
+            name="currentMeter"
+            value={waterMeter.currentMeter}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <div>
+          <label>Price per Unit:</label>
+          <input
+            type="number"
+            name="pricePerUnit"
+            value={waterMeter.pricePerUnit}
+            onChange={handleChange}
+            required
+          />
+        </div>
+        <button type="submit">บันทึกข้อมูล</button>
+      </form>
+    </div>
+  );
 };
 
 export default WaterMeterForm;

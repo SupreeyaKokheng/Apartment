@@ -5,9 +5,12 @@ import RoomList from './components/RoomList';
 import Login from "./components/Login";
 //import Welcome from "./Welcome";
 import Navigation from './components/Navigation';
+import './App.css';
 
 function App() {
     return (
+    <div className = "App">
+    <header className = "App-header">
         <Router>
          <Navigation />
             <div className="content">
@@ -18,7 +21,10 @@ function App() {
 
             </Routes>
              </div>
+
         </Router>
+           </header>
+           </div>
     );
 }
 

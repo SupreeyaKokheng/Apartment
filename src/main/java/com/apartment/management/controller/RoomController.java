@@ -10,6 +10,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/rooms")
 public class RoomController {
+
     private final RoomRepository roomRepository;
 
     public RoomController(RoomRepository roomRepository) {
@@ -26,4 +27,3 @@ public class RoomController {
         return roomRepository.save(room);
     }
 }
-

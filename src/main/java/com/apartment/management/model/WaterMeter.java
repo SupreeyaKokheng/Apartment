@@ -1,6 +1,7 @@
+
 package com.apartment.management.model;
 import jakarta.persistence.*;
-import java.time.LocalDate;
+
 
 @Entity
 @Table(name = "water_meters")
@@ -62,20 +63,5 @@ public class WaterMeter {
     public void setPricePerUnit(Double pricePerUnit) {
         this.pricePerUnit = pricePerUnit;
     }
-//
-//    public Double getTotalCost() {
-//        return totalCost;
-//    }
-//
-//    public void setTotalCost(Double totalCost) {
-//        this.totalCost = totalCost;
-//    }
-//
-//    public LocalDate getRecordDate() {
-//        return recordDate;
-//    }
-//
-//    public void setRecordDate(LocalDate recordDate) {
-//        this.recordDate = recordDate;
-//    }
+
 }
