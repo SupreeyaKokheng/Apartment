@@ -1,40 +1,22 @@
 .sidebar {
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 200px;
-  background-color: #333;
-  padding-top: 20px;
-  display: flex;
-  flex-direction: column;
+    height: 100vh;
+    width: 200px;
+    background-color: #333;
+    padding-top: 20px;
+    color: white;
 }
 
-.nav-button {
-  color: white;
-  text-decoration: none;
-  background-color: #444;
-  padding: 15px 20px;
-  margin: 10px;
-  border-radius: 5px;
-  text-align: center;
-  font-size: 18px;
-  font-weight: bold;
-  transition: background-color 0.3s;
+.nav-link {
+    display: block;
+    padding: 10px 15px;
+    color: white;
+    text-decoration: none;
 }
 
-.nav-button:hover {
-  background-color: #555;
+.nav-link:hover {
+    background-color: #555;
 }
 
-/* ทำให้ Sidebar Responsive */
-@media (max-width: 768px) {
-  .sidebar {
-    width: 100%;
-    height: auto;
-    position: relative;
-    flex-direction: row;
-    justify-content: space-around;
-  }
+.nav-link i {
+    margin-right: 10px;
 }
-

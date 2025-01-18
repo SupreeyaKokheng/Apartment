@@ -1,31 +1,26 @@
-import React from "react";
-import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import WaterMeterForm from './components/WaterMeterForm';
-import RoomList from './components/RoomList';
-import Login from "./components/Login";
-//import Welcome from "./Welcome";
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navigation from './components/Navigation';
-import './App.css';
+import DashboardPage from './components/DashboardPage';
+import WaterMeterPage from './components/WaterMeterPage';
 
-function App() {
-    return (
-    <div className = "App">
-    <header className = "App-header">
-        <Router>
-         <Navigation />
-            <div className="content">
-            <Routes>
-                <Route path="/" element={<Login />} />
-                <Route path="/RoomList" element={<RoomList />} />
-                <Route path="/WaterMeterForm" element={<WaterMeterForm />} />
+import './App.css'; // Import CSS file
 
-            </Routes>
-             </div>
+const App = () => {
+  return (
+    <Router>
+      <div className="app-container">
+        <Navigation />
+        <div className="content">
+          <Routes>
+            <Route path="/" element={<DashboardPage />} />
+            <Route path="/water-meter" element={<WaterMeterPage />} />
 
-        </Router>
-           </header>
-           </div>
-    );
-}
+          </Routes>
+        </div>
+      </div>
+    </Router>
+  );
+};
 
 export default App;

@@ -1,19 +1,13 @@
 package com.apartment.management.service;
 
 import com.apartment.management.model.Room;
-import com.apartment.management.repository.RoomRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-@Service
-public class RoomService {
-    @Autowired
-    private RoomRepository roomRepository;
+import java.util.List;
+import java.util.Optional;
 
-    public void updateMeterValue(Long roomId, Double meterValue) {
-        Room room = roomRepository.findById(roomId)
-                .orElseThrow(() -> new RuntimeException("Room not found"));
-        room.setMeterValue(meterValue); // Assumes Room entity has a meterValue field
-        roomRepository.save(room);
-    }
+public interface RoomService {
+    List<Room> findAllRooms();
+    Optional<Room> findRoomById(Long id);
+    Room saveRoom(Room room);
+    void deleteRoom(Long id);
 }

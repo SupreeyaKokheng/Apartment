@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-public class WaterMeter {
+public class ElectricMeter {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -23,9 +23,9 @@ public class WaterMeter {
     private LocalDate recordDate;  // วันที่บันทึกค่า
 
     // Constructor
-    public WaterMeter() {}
+    public ElectricMeter() {}
 
-    public WaterMeter(Room room, Double meterValue, LocalDate recordDate) {
+    public ElectricMeter(Room room, Double meterValue, LocalDate recordDate) {
         this.room = room;
         this.meterValue = meterValue;
         this.recordDate = recordDate;

@@ -1,27 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
 import axios from "axios";
-import "./RoomList.css"; // Import CSS สำหรับตกแต่ง
 
 const RoomList = () => {
   const [rooms, setRooms] = useState([]);
   const [meterValues, setMeterValues] = useState({});
-  const [currentDate, setCurrentDate] = useState("");
-  const inputRefs = useRef([]); // สร้าง Array ของ Ref สำหรับ input
+  const inputRefs = useRef([]);
 
-  // ดึงข้อมูลห้องและวันที่ปัจจุบัน
+  // ดึงข้อมูลห้อง
   useEffect(() => {
-    // ดึงข้อมูลห้อง
     axios.get("/api/rooms").then((response) => {
       setRooms(response.data);
     });
-
-    // ดึงวันที่ปัจจุบัน
-    const today = new Date();
-    const formattedDate = today.toISOString().split("T")[0]; // รูปแบบ YYYY-MM-DD
-    setCurrentDate(formattedDate);
   }, []);
 
-  // ฟังก์ชันจัดการการเปลี่ยนแปลงค่า Water Meter
   const handleInputChange = (roomId, value) => {
     setMeterValues({
       ...meterValues,
@@ -29,40 +20,21 @@ const RoomList = () => {
     });
   };
 
-  // ฟังก์ชันตรวจจับ Enter เพื่อบันทึกและเลื่อนไปยังช่องถัดไป
-  const handleKeyDown = (e, index, roomId) => {
-    if (e.key === "Enter") {
-      handleSubmit(roomId); // บันทึกข้อมูล
-
-      // โฟกัสไปที่ input ถัดไป
-      const nextIndex = index + 1;
-      if (nextIndex < inputRefs.current.length) {
-        inputRefs.current[nextIndex].focus();
-      }
-    }
-  };
-
-  // ฟังก์ชันบันทึกค่า Water Meter และวันที่ไปยัง Database
   const handleSubmit = (roomId) => {
     const meterValue = meterValues[roomId];
+    const recordDate = new Date().toISOString().split("T")[0];
+
     axios
-      .post("/api/rooms/meter", { roomId, meterValue, recordDate: currentDate })
-      .then(() => {
-        alert(`บันทึกข้อมูลห้อง ${roomId} สำเร็จ!`);
-      })
+      .post("/api/water", { roomId, meterValue, recordDate })
       .catch((error) => {
-        console.error("เกิดข้อผิดพลาด:", error);
+        console.error(error);
       });
   };
 
   return (
-    <div className="water-meter-container">
+    <div>
       <h1>Water Meter</h1>
-
-      {/* แสดงวันที่ปัจจุบัน */}
-      <p className="date-display">📅 วันที่: {currentDate}</p>
-
-      <table className="responsive-table">
+      <table>
         <thead>
           <tr>
             <th>Room Number</th>
@@ -77,10 +49,9 @@ const RoomList = () => {
               <td>
                 <input
                   type="number"
-                  ref={(el) => (inputRefs.current[index] = el)} // เก็บ Ref ของแต่ละ input
+                  ref={(el) => (inputRefs.current[index] = el)}
                   value={meterValues[room.id] || ""}
                   onChange={(e) => handleInputChange(room.id, e.target.value)}
-                  onKeyDown={(e) => handleKeyDown(e, index, room.id)} // ตรวจจับ Enter
                 />
               </td>
               <td>
@@ -95,6 +66,7 @@ const RoomList = () => {
 };
 
 export default RoomList;
+
 //
 //
 //// RoomList.js
