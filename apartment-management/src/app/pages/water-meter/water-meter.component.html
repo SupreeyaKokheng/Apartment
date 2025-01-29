@@ -1,0 +1,21 @@
+<div class="container">
+    <h1 class="title">บันทึกมิเตอร์น้ำ</h1>
+    <p class="date">วันที่: {{ today }}</p>
+    <form [formGroup]="waterMeterForm" (ngSubmit)="submitData()" class="form">
+      <div class="room-list">
+        <div class="room-row" *ngFor="let room of rooms; let i = index">
+          <label class="room-label">{{ room }}</label>
+          <input
+            class="room-input"
+            type="number"
+            [formControlName]="'room' + (i + 1)"
+            placeholder="เลขมิเตอร์"
+            (keyup.enter)="focusNextField(i)"
+          />
+
+        </div>
+      </div>
+      <button type="submit" class="submit-button">บันทึกข้อมูล</button>
+    </form>
+  </div>
+  

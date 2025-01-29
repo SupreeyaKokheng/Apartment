@@ -1,0 +1,14 @@
+<div class="electric-meter">
+    <h1>บันทึกเลขมิเตอร์ไฟ</h1>
+    <p>วันที่: {{ today }}</p>
+    <form [formGroup]="electricMeterForm" (ngSubmit)="submitElectricMeter()">
+      <div *ngFor="let room of rooms; let i = index">
+        <mat-form-field appearance="fill">
+          <mat-label>{{ room }}</mat-label>
+          <input matInput formControlName="room{{i}}" (keyup.enter)="nextField(i)" />
+        </mat-form-field>
+      </div>
+      <button mat-raised-button color="primary" type="submit">บันทึก</button>
+    </form>
+  </div>
+  
