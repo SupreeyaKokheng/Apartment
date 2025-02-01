@@ -1,7 +1,27 @@
-<nav>
-  <a routerLink="/water-meter">Water Meter</a>
-  <a routerLink="/electric-meter">Electric Meter</a>
-  <a routerLink="/summary">Summary</a>
-  <a routerLink="/billing">Billing</a>
+
+<nav class="navbar">
+  <div class="container">
+    <h1>🏠 Apartment Management</h1>
+  </div>
 </nav>
-<router-outlet></router-outlet>
+
+<!-- Container ที่จะแสดงเนื้อหาของแต่ละหน้า -->
+<div class="content">
+  <div class="login-container">
+    <h2>🔑 Login</h2>
+
+    <form (ngSubmit)="onLogin()">
+      <input type="text" [(ngModel)]="username" name="username" placeholder="Username">
+      <input type="password" [(ngModel)]="password" name="password" placeholder="Password">
+      <button type="submit">Login</button>
+    </form>
+
+
+    <p *ngIf="errorMessage" class="error">{{ errorMessage }}</p>
+  </div>
+</div>
+
+<!-- Footer -->
+<footer>
+  <p>© 2025 Apartment Management System</p>
+</footer>

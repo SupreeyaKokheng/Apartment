@@ -1,12 +1,29 @@
+
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import { CommonModule } from '@angular/common'; // ✅ ต้องเพิ่ม!
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  standalone: true,
+  imports: [CommonModule, FormsModule], // ✅ ใส่ CommonModule และ FormsModule
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrls: ['./app.component.css']
 })
 export class AppComponent {
   title = 'apartment-management';
+
+  username: string = '';
+  password: string = '';
+  errorMessage: string = '';
+
+  onLogin() {
+    console.log('🔐 Logging in with:', this.username, this.password);
+
+    if (this.username === 'admin' && this.password === 'password123') {
+      alert('✅ Login Successful!');
+    } else {
+      this.errorMessage = '🚨 Invalid username or password!';
+    }
+  }
 }
