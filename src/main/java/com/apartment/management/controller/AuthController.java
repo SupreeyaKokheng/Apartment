@@ -18,15 +18,20 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequestDTO loginRequest) {
+        System.out.println("🚀 Login API ถูกเรียกใช้งาน!"); // ✅ Debug
+
         boolean isAuthenticated = authService.authenticate(loginRequest.getUsername(), loginRequest.getPassword());
 
         if (isAuthenticated) {
-            String token = authService.generateJwtToken(loginRequest.getUsername()); // ✅ ใช้ generateJwtToken()
+            System.out.println("✅ Login สำเร็จ!"); // ✅ Debug
+            String token = authService.generateJwtToken(loginRequest.getUsername());
             return ResponseEntity.ok(Map.of("token", token));
         } else {
+            System.out.println("🚨 Login ล้มเหลว!"); // ✅ Debug
             return ResponseEntity.status(401).body(Map.of("message", "Invalid credentials"));
         }
     }
+
 
 //    @GetMapping("/check")
 //    public ResponseEntity<?> checkAuth() {

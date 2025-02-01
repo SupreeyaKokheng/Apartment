@@ -15,18 +15,29 @@ public class JwtService {
 
     // ✅ สร้าง JWT Token
     public String generateToken(String username) {
-        return Jwts.builder()
+        //return Jwts.builder()
+        String token = Jwts.builder()
                 .setSubject(username)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // 10 ชั่วโมง
                 .signWith(Keys.hmacShaKeyFor(SECRET_KEY.getBytes(StandardCharsets.UTF_8)))
                 .compact();
+
+        System.out.println("✅ Token ที่สร้าง: " + token); // เพิ่ม LOG
+        return token;
     }
 
     // ✅ ดึง Username จาก Token
+    //เพิ่ม try catch และเหลือแค่ return
     public String extractUsername(String token) {
-        return extractClaim(token, Claims::getSubject);
+        try {
+            return extractClaim(token, Claims::getSubject);
+        } catch (Exception e) {
+            System.out.println("🚨 Error ในการถอดรหัส Token: " + e.getMessage());
+            return null;
+        }
     }
+
 
     // ✅ ตรวจสอบว่า Token หมดอายุหรือไม่
     public boolean isTokenExpired(String token) {
